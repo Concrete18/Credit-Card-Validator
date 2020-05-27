@@ -1,37 +1,37 @@
-def card_check(num):
-    if num % 10 == 0:
-        return True
+import re
+
+
+def card_check(test):
+    card_number = input('Payment Card Validator\nType in a card number to validate it:\n')
+    if test == 1:
+        card_number = '4-5-7-8-4-2-3-5-9-3-7-6-9-2-2'
+    elif test == 2:
+        card_number = '4578 4230 1376 9219'
+    card_number = re.sub('[^0-9]', '', card_number)
+    provider_list = {3: 'American Express', 4: 'Visa', 5: 'Mastercard', 6: 'Discover', }
+    number_list = [int(elem) for elem in card_number if elem in card_number]
+    if number_list[0] in provider_list:
+        provider = provider_list[number_list[0]]
     else:
-        return False
-
-
-# card_number = input('Payment Card Validator\n Type in a card number to validate it.')
-
-card_number = '4578 4230 1376 9219'
-# card_number = '4465 4203 3974 7768'
-omit_list = [' ', '-', '_', '.', ',']
-number_list = [int(elem) for elem in card_number if elem not in omit_list]
-
-print(number_list)
-
-odd = 0
-mod_list = []
-for elem in number_list:
-    if odd == 0:
-        elem = elem*2
-        if elem > 9:
-            Sum = 0
-            while elem > 0:
-                Reminder = elem % 10
-                Sum = Sum + Reminder
-                elem = elem // 10
-        mod_list.append(elem)
-        odd = 1
+        print(f'{card_number} is not a valid card number.')
+        return
+    odd = False
+    mod_list = []
+    for num in number_list:
+        if not odd:
+            num = num * 2
+            num = num % 10 + num // 10
+            mod_list.append(num)
+        else:
+            mod_list.append(int(num))
+        odd = (odd+1) % 2
+    if sum(mod_list) % 10 == 0:
+        print(f'{card_number} is a valid card number with {provider}.')
     else:
-        mod_list.append(int(elem))
-        odd = 0
-print(mod_list)
+        print(f'{card_number} is not a valid card number.')
+    response = input('Do you want to validate another card number? Y/N\n')
+    if response.lower() == 'y':
+        card_check(test)
 
-print(card_check(sum(mod_list)))
 
-
+card_check(3)
