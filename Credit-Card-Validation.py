@@ -1,12 +1,8 @@
 import re
 
 
-def card_check(test):
+def card_check():
     card_number = input('Payment Card Validator\nType in a card number to validate it:\n')
-    if test == 1:
-        card_number = '4-5-7-8-4-2-3-5-9-3-7-6-9-2-2'
-    elif test == 2:
-        card_number = '4578 4230 1376 9219'
     card_number = re.sub('[^0-9]', '', card_number)
     provider_list = {3: 'American Express', 4: 'Visa', 5: 'Mastercard', 6: 'Discover', }
     number_list = [int(elem) for elem in card_number if elem in card_number]
@@ -34,4 +30,4 @@ def card_check(test):
         card_check(test)
 
 
-card_check(3)
+card_check()
