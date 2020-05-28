@@ -27,7 +27,7 @@ def card_check():
         print(f'{card_number} is not a valid card number.')
     response = input('Do you want to validate another card number? Y/N\n')
     if response.lower() == 'y':
-        card_check(test)
+        card_check()
 
 
 card_check()
